@@ -1,0 +1,7 @@
+Font=Consolas
+FontHeight=12
+Columns=125
+Rows=45
+FontSmoothing=default
+Term=xterm-256color
+ThemeFile=flat-ui

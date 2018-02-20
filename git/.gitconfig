@@ -1,0 +1,22 @@
+[user]
+	name = Ben Shi
+	email = email@email 
+
+[color]
+	ui = true
+
+[core]
+	trustctime = false
+	editor = vim
+	filemode = false
+	autocrlf = false
+
+[credential]
+	helper = cache --timeout=3600
+
+[alias]
+	last = log -1 --stat
+	st = status -sb
+	ci = commit
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all
+	cleanup = "!git branch --merged | grep -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
