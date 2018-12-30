@@ -1,0 +1,14 @@
+autodetach on
+
+defscrollback 5000
+
+startup_message off
+
+# Status Line
+hardstatus on
+hardstatus alwayslastline
+hardstatus string "%{.kW}%-w%{.bW}%t [%n]%{-}%+w %=%{..G} %H %{..Y} %Y/%m/%d %c"
+
+# termcapinfo xterm ti@:te@
+termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007:ti@:te@'
+# From http://www4.informatik.uni-erlangen.de/~jnweiger/screen-faq.html
