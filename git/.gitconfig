@@ -1,6 +1,10 @@
 [user]
 	name = Ben Shi
-	email = email@email 
+    email = email@email
+
+# load .gitconfig from subdirectories
+# [includeIf "gitdir:~/prj/<name_of_project>/"]
+#   path = ~/prj/<name_of_project>/.gitconfig
 
 [color]
 	ui = true
@@ -20,3 +24,16 @@
 	ci = commit
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all
 	cleanup = "!git branch --merged | grep -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+
+# git-lfs settings
+#[filter "lfs"]
+	# process = git-lfs filter-process
+	# required = true
+	# clean = git-lfs clean -- %f
+	# smudge = git-lfs smudge -- %f
+
+# gpg settings
+#[commit]
+#   gpgsign = true
+#[gpg]
+#	program = /usr/local/MacGPG2/bin/gpg2
