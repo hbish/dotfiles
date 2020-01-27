@@ -2,20 +2,32 @@
 
 personal setups and other things
 
+# folders
+
+- git - git configuration
+- hammerspoon - contains automation scripts
+- scripts - contains various bash/zsh scripts
+- windows - window specific dot files
+- zsh - configuration for zsh
+
 # Installation
 
 0. Prereq
 - Homebrew
-- Homebrew brew 
+
+```/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"```
+
 - Stow (required for symlinking dotfiles)
 
 
 1. Clone the repo
+
 ```
 https://github.com/hbish/dotfiles.git ~/.dotfiles
 ```
 
 2. Make zsh as default shell
+
 ```
 chsh -s /usr/local/bin/zsh
 ```
@@ -23,6 +35,7 @@ chsh -s /usr/local/bin/zsh
 3. Install prezto
 
 4. Symlink
+
 ```
 cd ~/.dotfiles
 stow <folder_name>

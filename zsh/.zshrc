@@ -12,8 +12,6 @@ fi
 
 # Customize to your needs...
 
-alias idea='open -a "`ls -dt /Applications/IntelliJ\ IDEA*|head -1`"'
-
 export NVM_DIR="$HOME/.nvm"
 . "/usr/local/opt/nvm/nvm.sh"
 
@@ -34,3 +32,11 @@ SPACESHIP_PROMPT_ORDER=(
   vi_mode       # Vi-mode indicator
   char          # Prompt character
 )
+
+# Set Spaceship ZSH as a prompt
+autoload -U promptinit; promptinit
+prompt spaceship
+
+# jenv
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
