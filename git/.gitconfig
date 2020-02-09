@@ -1,6 +1,6 @@
 [user]
-  name = Ben Shi
-  email = ben.shi@growsuper.com
+	name = Ben Shi
+    email = email@email
 
 # load .gitconfig from subdirectories
 # [includeIf "gitdir:~/prj/<name_of_project>/"]
