@@ -11,32 +11,35 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+HISTFILE=~/.zsh_history
+SAVEHIST=50000
+HISTSIZE=50000
 
-export NVM_DIR="$HOME/.nvm"
-. "/usr/local/opt/nvm/nvm.sh"
+EDITOR="vim"
 
-SPACESHIP_PROMPT_ORDER=(
-  time          # Time stampts section
-  user          # Username section
-  host          # Hostname section
-  dir           # Current directory section
-  git           # Git section (git_branch + git_status)
-  node          # Node.js section
-  elixir        # Elixir section
-  xcode         # Xcode section
-  golang        # Go section
-  docker        # Docker section
-  venv          # virtualenv section
-  pyenv         # Pyenv section
-  line_sep      # Line break
-  vi_mode       # Vi-mode indicator
-  char          # Prompt character
-)
+# set options
+setopt    append_history               # don't overwrite history
+setopt    extended_history             # [unset]
+setopt    hist_find_no_dups            # [unset] ignore dupes in history search
+setopt    hist_ignore_dups             # this will not put _consecutive_ duplicates in the history
+setopt    hist_ignore_space            # if any command starts with a whitespace, it will not be saved. it will stil be displayed in the current session, though
+setopt    hist_verify                  # [unset] when doing history substitution, put the substituted line into the line editor
 
-# Set Spaceship ZSH as a prompt
-autoload -U promptinit; promptinit
-prompt spaceship
 
-# jenv
+alias idea='open -a "`ls -dt /Applications/IntelliJ\ IDEA*|head -1`"'
+alias bs_jenv="find $HOME/.sdkman/candidates/java -type d -maxdepth 1 -mindepth 1 -exec jenv add '{}' \;"
+
+export PATH=".:$HOME/miniconda3/bin:$PATH"
+export NVM_DIR=~/.nvm
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# SDKMAN
+export SDKMAN_DIR="/Users/bshi/.sdkman"
+[[ -s "/Users/bshi/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/bshi/.sdkman/bin/sdkman-init.sh"
+
 export PATH="$HOME/.jenv/bin:$PATH"
+
 eval "$(jenv init -)"
+eval "$(jenv enable-plugin export)"
+
+eval "$(starship init zsh)"
