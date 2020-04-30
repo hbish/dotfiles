@@ -80,9 +80,9 @@ hs.hotkey.bind({"cmd","alt","shift"}, "D", mouseHighlight)
 caffeine = hs.menubar.new()
 function setCaffeineDisplay(state)
     if state then
-        caffeine:setTitle("AWAKE")
+        caffeine:setTitle("🚀")
     else
-        caffeine:setTitle("SLEEPY")
+        caffeine:setTitle("🐢")
     end
 end
 
@@ -93,6 +93,65 @@ end
 if caffeine then
     caffeine:setClickCallback(caffeineClicked)
     setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
+end
+
+-- NowPlaying
+nowPlaying = hs.menubar.new()
+currentSong = ""
+
+function getSongString()
+  return hs.spotify.getCurrentArtist() .. " - " .. hs.spotify.getCurrentTrack()
+end
+
+function getSlackString()
+    local emoji_table = {":loud_sound:",":headsetparrot:",":headphones:",":sound:",":musical_note:"}
+    local value = math.random(1, #emoji_table)
+    local emoji = emoji_table[value]
+    expiry = os.time(os.date('*t')) + 300
+    body = '{"status_text":"' .. getSongString() .. '","status_emoji":"'.. emoji ..'","status_expiration":'.. expiry ..'}'
+    return "https://slack.com/api/users.profile.set?profile=" .. hs.http.encodeForQuery(body) .."&token=<SLACK_TOKEN>"
+end
+
+function spotifyTimerCallback()
+  apps = hs.application.applicationsForBundleID("com.spotify.client")
+  if #apps > 0 then
+    state = hs.spotify.getPlaybackState()
+    if state ~= nil then
+      if string.match(hs.spotify.state_stopped, state) ~= nil then
+        nowPlaying:removeFromMenuBar()
+        nowPlaying = nil
+      elseif string.match(hs.spotify.state_paused, state) ~= nil then
+        nowPlaying:returnToMenuBar()
+        nowPlaying:setTitle("⏸ " .. getSongString())
+      elseif string.match(hs.spotify.state_playing, state) ~= nil then
+        local newSong = getSongString()
+        nowPlaying:returnToMenuBar()
+        nowPlaying:setTitle("▶️ " .. newSong)
+        if currentSong ~= newSong then
+          currentSong = newSong
+          hs.http.asyncPost(getSlackString(), nil, nil, function() end)
+          print("update")
+        end
+      end
+    end
+  else
+    nowPlaying:removeFromMenuBar()
+  end
+end
+
+function nowPlayingClicked()
+    print(getSlackString())
+    hs.spotify.playpause()
+    spotifyTimerCallback()
+end
+
+if nowPlaying then
+  spotifyTimerCallback()
+  nowPlaying:setClickCallback(nowPlayingClicked)
+  nowPlayingTimer = hs.timer.new(60, spotifyTimerCallback)
+  nowPlayingTimer:start()
+  -- some weird issue with sleep
+  -- hs.timer.doEvery(30, spotifyTimerCallback)
 end
 
 -- App Watcher
@@ -107,19 +166,10 @@ end
 appWatcher = hs.application.watcher.new(applicationWatcher)
 appWatcher:start()
 
--- set up your windowfilter
-switcher = hs.window.switcher.new() -- default windowfilter: only visible windows, all Spaces
-switcher_space = hs.window.switcher.new(hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}) -- include minimized/hidden windows, current Space only
-switcher_browsers = hs.window.switcher.new{'Safari','Google Chrome'} -- specialized switcher for your dozens of browser windows :)
-
--- bind to hotkeys; WARNING: at least one modifier key is required!
-hs.hotkey.bind('alt','tab','Next window',function()switcher:next()end)
-hs.hotkey.bind('alt-shift','tab','Prev window',function()switcher:previous()end)
-
--- alternatively, call .nextWindow() or .previousWindow() directly (same as hs.window.switcher.new():next())
-hs.hotkey.bind('alt','tab','Next window',hs.window.switcher.nextWindow)
--- you can also bind to `repeatFn` for faster traversing
-hs.hotkey.bind('alt-shift','tab','Prev window',hs.window.switcher.previousWindow,nil,hs.window.switcher.previousWindow)
+-- alert default
+hs.alert.defaultStyle.radius = 3
+hs.alert.defaultStyle.strokeColor = { white = 1, alpha = 0 }
+hs.alert.defaultStyle.fillColor = { white = 0.05, alpha = 0.75 }
 
 -- Reload Function
 function reloadConfig(files)

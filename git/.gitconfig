@@ -1,10 +1,10 @@
 [user]
 	name = Ben Shi
-    email = email@email
+	email = ben.shi@growsuper.com
 
 # load .gitconfig from subdirectories
-# [includeIf "gitdir:~/prj/<name_of_project>/"]
-#   path = ~/prj/<name_of_project>/.gitconfig
+[includeIf "gitdir:~/prj/hbish/"]
+	path = ~/prj/hbish/.gitconfig
 
 [color]
 	ui = true
@@ -14,6 +14,7 @@
 	editor = vim
 	filemode = false
 	autocrlf = false
+	excludesfile = ~/.gitignore
 
 [credential]
 	helper = cache --timeout=3600
@@ -27,13 +28,13 @@
 
 # git-lfs settings
 #[filter "lfs"]
-	# process = git-lfs filter-process
-	# required = true
-	# clean = git-lfs clean -- %f
-	# smudge = git-lfs smudge -- %f
+# process = git-lfs filter-process
+# required = true
+# clean = git-lfs clean -- %f
+# smudge = git-lfs smudge -- %f
 
 # gpg settings
 #[commit]
-#   gpgsign = true
+#	 gpgsign = true
 #[gpg]
 #	program = /usr/local/MacGPG2/bin/gpg2
