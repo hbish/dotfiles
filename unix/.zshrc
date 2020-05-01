@@ -57,27 +57,6 @@ kitty + complete setup zsh | source /dev/stdin
 
 
 # functions
-
-## Go Projects
-function peco-src () {
-  local selected_dir=$(ghq list -p | peco --query "$LBUFFER" --layout=bottom-up)
-  if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
-    zle accept-line
-  fi
-  zle clear-screen
-}
-zle -N peco-src
-bindkey '^]' peco-src
-
-
-function peco-prj () {
-  local selected_dir=$(ls -d $HOME/prj/* | peco --query "$LBUFFER" --layout=bottom-up)
-  if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
-    zle accept-line
-  fi
-  zle clear-screen
-}
-zle -N peco-prj
-bindkey '^[' peco-prj
+if [ -f $HOME/.zfunctions/func_peco.zsh ]; then
+	. $HOME/.zfunctions/func_peco.zsh
+fi
