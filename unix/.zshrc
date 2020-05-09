@@ -28,8 +28,8 @@ setopt    hist_verify                  # [unset] when doing history substitution
 alias dc=docker-compose
 alias idea='open -a "`ls -dt /Applications/IntelliJ\ IDEA*|head -1`"'
 alias bs_jenv="find $HOME/.sdkman/candidates/java -type d -maxdepth 1 -mindepth 1 -exec jenv add '{}' \;"
+alias ssh="kitty +kitten ssh"
 
-export PATH=".:$HOME/miniconda3/bin:$PATH"
 export NVM_DIR=~/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
@@ -37,18 +37,10 @@ export NVM_DIR=~/.nvm
 export SDKMAN_DIR="/Users/bshi/.sdkman"
 [[ -s "/Users/bshi/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/bshi/.sdkman/bin/sdkman-init.sh"
 
-export PATH="$HOME/.jenv/bin:$PATH"
-
 eval "$(jenv init -)"
 eval "$(jenv enable-plugin export)"
 
 eval "$(starship init zsh)"
-
-export PATH="/usr/local/opt/libpq/bin:$PATH"
-
-# GO related config
-export GOPATH="/Users/bshi/dev/go"
-export PATH="$GOPATH/bin:$PATH"
 
 autoload -Uz compinit
 compinit

@@ -72,3 +72,12 @@ if [[ ! -d "$TMPDIR" ]]; then
 fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
+
+# Additional Env
+export PATH="$HOME/.jenv/bin:$PATH"
+export PATH=".:$HOME/miniconda3/bin:$PATH"
+export PATH="/usr/local/opt/libpq/bin:$PATH"
+
+# GO related config
+export GOPATH="/Users/bshi/dev/go"
+export PATH="$GOPATH/bin:$PATH"

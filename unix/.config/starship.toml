@@ -5,4 +5,60 @@ symbol = "➜"     # The "symbol" segment is being set to "➜"
 [username]
 disabled = false
 
+prompt_order = [
+    "directory",
+    "git_branch",
+    "git_commit",
+    "git_state",
+    "git_status",
+    "time",
+    "docker_context",
+    "package",
+    "golang",
+    "java",
+    "nodejs",
+    "python",
+    "rust",
+    "conda",
+    "memory_usage",
+    "line_break",
+    "character",
+]
 
+scan_timeout = 10
+
+[time]
+disabled = true
+format = "%Y-%m-%d %H:%M:%S"
+
+[cmd_duration]
+min_time = 500
+prefix = "took "
+enabled = false
+
+[directory]
+style = "bright-white"
+
+[character]
+symbol = "❯"
+style_success = "bold white"
+style_failure = "bold bright-red"
+use_symbol_for_status = false
+
+[git_status]
+style = "bright-red"
+ahead = "  "
+behind = "  "
+diverged = "  "
+untracked = "  "
+untracked_count.enabled = true
+stashed = "  "
+modified = "  "
+modified_count.enabled = true
+staged = "  "
+staged_count.enabled = true
+renamed = "  "
+deleted = "  "
+show_sync_count = true
+prefix = "·"
+suffix = " "
