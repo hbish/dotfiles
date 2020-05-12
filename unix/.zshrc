@@ -54,8 +54,8 @@ export YSU_HARDCORE=0
 zinit light MichaelAquilina/zsh-you-should-use
 
 # ssh
-zstyle :omz:plugins:ssh-agent identities id_rsa
-zinit snippet OMZ::plugins/ssh-agent/ssh-agent.plugin.zsh
+zstyle :pzt:module:ssh:load identities 'id_rsa'
+zplugin snippet PZT::modules/ssh/init.zsh
 
 # git
 zinit snippet OMZ::plugins/git/git.plugin.zsh
