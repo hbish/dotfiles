@@ -8,7 +8,11 @@ personal setups and other things
 - hammerspoon - contains automation scripts
 - scripts - contains various bash/zsh scripts
 - windows - window specific dot files
-- zsh - configuration for zsh
+- unix - configuration for zsh and other programs
+  - .config
+    - starship - shell prompt
+    - kitty - terminal
+    - karabiner - keybinding (for mac)
 
 # Installation
 
