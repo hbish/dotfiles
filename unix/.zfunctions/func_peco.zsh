@@ -1,6 +1,6 @@
 # Function to load Go Sources
 function peco-src () {
-  local selected_dir=$(ghq list -p | peco --query "$LBUFFER" --layout=bottom-up)
+  local selected_dir=$(ls -d $HOME/dev/* | peco --query "$LBUFFER" --layout=bottom-up)
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
     zle accept-line
@@ -8,7 +8,7 @@ function peco-src () {
   zle clear-screen
 }
 zle -N peco-src
-bindkey '^]' peco-src
+bindkey '^[2' peco-src
 
 # Function to load my projects
 function peco-prj () {
@@ -20,4 +20,4 @@ function peco-prj () {
   zle clear-screen
 }
 zle -N peco-prj
-bindkey '^[' peco-prj
+bindkey '^[1' peco-prj
