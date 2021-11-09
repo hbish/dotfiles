@@ -1,23 +1,23 @@
-prompt_order = [
-    "directory",
-    "git_branch",
-    "git_commit",
-    "git_state",
-    "git_status",
-    "time",
-    "docker_context",
-    "package",
-    "golang",
-    "java",
-    "nodejs",
-    "python",
-    "rust",
-    "conda",
-    "aws",
-    "memory_usage",
-    "line_break",
-    "character",
-]
+format = """\
+    $directory\
+    $git_branch\
+    $git_commit\
+    $git_state\
+    $git_status\
+    $time\
+    $docker_context\
+    $package\
+    $golang\
+    $java\
+    $nodejs\
+    $python\
+    $rust\
+    $conda\
+    $aws\
+    $memory_usage\
+    $line_break\
+    $character\
+"""
 
 scan_timeout = 10
 
@@ -36,10 +36,9 @@ style = "bright-white"
 disabled = false
 
 [character]
-symbol = "➜"
-style_success = "bold white"
-style_failure = "bold bright-red"
-use_symbol_for_status = false
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
+vicmd_symbol = "[➜](bold green)"
 
 [git_status]
 style = "bright-red"
@@ -47,17 +46,11 @@ ahead = "  "
 behind = "  "
 diverged = "  "
 untracked = "  "
-untracked_count.enabled = true
 stashed = "  "
 modified = "  "
-modified_count.enabled = true
 staged = "  "
-staged_count.enabled = true
 renamed = "  "
 deleted = "  "
-show_sync_count = true
-prefix = "·"
-suffix = " "
 
 [aws]
 disabled = true
