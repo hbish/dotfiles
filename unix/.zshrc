@@ -3,14 +3,14 @@ source "$HOME/.zinit/bin/zinit.zsh"
 
 # zinit annexes
 zinit light-mode for \
-    zinit-zsh/z-a-rust \
-    zinit-zsh/z-a-bin-gem-node
+    zdharma-continuum/z-a-rust \
+    zdharma-continuum/z-a-bin-gem-node
 
 # utilities
 zinit for \
     light-mode  zsh-users/zsh-autosuggestions \
-    light-mode  zdharma/fast-syntax-highlighting \
-                zdharma/history-search-multi-word \
+    light-mode  zdharma-continuum/fast-syntax-highlighting \
+                zdharma-continuum/history-search-multi-word \
 
 zinit ice \
     svn \
@@ -65,7 +65,6 @@ zinit snippet OMZ::plugins/git/git.plugin.zsh
 zinit load "lukechilds/zsh-nvm"
 
 # java
-source $HOME/.asdf/asdf.sh
 if [ -d "$HOME/.asdf/plugins/java" ]; then
   zinit ice wait"0" pick".asdf/plugins/java/set-java-home.zsh" lucid
   zinit light %HOME
