@@ -32,7 +32,7 @@ function spotifyTimerCallback()
                 nowPlaying:setTitle("▶️ " .. newSong)
                 if currentSong ~= newSong then
                     currentSong = newSong
-                    hs.http.asyncPost(getSlackString(), nil, nil, function() end)
+                    -- hs.http.asyncPost(getSlackString(), nil, nil, function() end)
                     print("update")
                 end
             end
@@ -43,7 +43,6 @@ function spotifyTimerCallback()
 end
 
 function nowPlayingClicked()
-    print(getSlackString())
     hs.spotify.playpause()
     spotifyTimerCallback()
 end

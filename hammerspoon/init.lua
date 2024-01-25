@@ -1,6 +1,6 @@
 require("window-management")
 require("caffeine")
-require("now-playing")
+require("now-playing-itune")
 require("app-watcher")
 
 -- alert default
