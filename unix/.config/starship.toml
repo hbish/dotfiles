@@ -36,9 +36,9 @@ style = "bright-white"
 disabled = false
 
 [character]
-success_symbol = "[➜](bold green)"
-error_symbol = "[➜](bold red)"
-vicmd_symbol = "[➜](bold green)"
+success_symbol = "[λ](bold green)"
+error_symbol = "[λ](bold red)"
+vicmd_symbol = "[λ](bold green)"
 
 [git_status]
 style = "bright-red"

@@ -1,94 +1,140 @@
+# Start configuration added by Zim install {{{
+#
+# User configuration sourced by interactive shells
+#
 
-source "$HOME/.zinit/bin/zinit.zsh"
+# -----------------
+# Zsh configuration
+# -----------------
 
-# zinit annexes
-zinit light-mode for \
-    zdharma-continuum/z-a-rust \
-    zdharma-continuum/z-a-bin-gem-node
+#
+# History
+#
 
-# utilities
-zinit for \
-    light-mode  zsh-users/zsh-autosuggestions \
-    light-mode  zdharma-continuum/fast-syntax-highlighting \
-                zdharma-continuum/history-search-multi-word \
+# Remove older command from the history if a duplicate is to be added.
+setopt HIST_IGNORE_ALL_DUPS
 
-zinit ice \
-    svn \
-    wait \
-    lucid \
-    submods'zsh-users/zsh-completions -> external'
+#
+# Input/output
+#
 
-# zsh
-HISTFILE=~/.zsh_history
-SAVEHIST=50000
-HISTSIZE=50000
+# Set editor default keymap to emacs (`-e`) or vi (`-v`)
+bindkey -e
 
-EDITOR="vim"
+# Prompt for spelling correction of commands.
+#setopt CORRECT
 
-setopt    append_history               # don't overwrite history
-setopt    extended_history             # [unset]
-setopt    hist_find_no_dups            # [unset] ignore dupes in history search
-setopt    hist_ignore_dups             # this will not put _consecutive_ duplicates in the history
-setopt    hist_ignore_space            # if any command starts with a whitespace, it will not be saved. it will stil be displayed in the current session, though
-setopt    hist_verify                  # [unset] when doing history substitution, put the substituted line into the line editor
+# Customize spelling correction prompt.
+#SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 
-is_macos() {
-    [[ "$OSTYPE" == darwin* ]]
-}
+# Remove path separator from WORDCHARS.
+WORDCHARS=${WORDCHARS//[\/]}
 
+# -----------------
+# Zim configuration
+# -----------------
 
-# alias
-alias vim=nvim
-alias vi=nvim
-alias dc=docker-compose
-alias idea='open -a "`ls -dt /Applications/IntelliJ\ IDEA*|head -1`"'
-alias bs_jenv="find $HOME/.sdkman/candidates/java -type d -maxdepth 1 -mindepth 1 -exec jenv add '{}' \;"
-alias ssh='TERM="xterm-256color" kitty +kitten ssh'
+# Use degit instead of git as the default tool to install and update modules.
+#zstyle ':zim:zmodule' use 'degit'
 
-# preferred prompt
-zinit ice from"gh-r" as"program" pick"**/starship" \
-    atload"!eval \$(STARSHIP_CONFIG=\"${HOME}/.config/starship.toml\" starship init zsh)"
-zinit light starship/starship
+# --------------------
+# Module configuration
+# --------------------
 
-export YSU_MESSAGE_FORMAT="💡 You should use: $(tput bold)%alias$(tput sgr0)"
-export YSU_HARDCORE=0
-zinit light MichaelAquilina/zsh-you-should-use
-
-# ssh
-zstyle :omz:plugins:ssh-agent identities id_rsa
-zinit snippet OMZ::plugins/ssh-agent/ssh-agent.plugin.zsh
-
+#
 # git
-zinit snippet OMZ::plugins/git/git.plugin.zsh
+#
 
-# nodejs nvm
-zinit load "lukechilds/zsh-nvm"
+# Set a custom prefix for the generated aliases. The default prefix is 'G'.
+#zstyle ':zim:git' aliases-prefix 'g'
 
-# java
-if [ -d "$HOME/.asdf/plugins/java" ]; then
-  zinit ice wait"0" pick".asdf/plugins/java/set-java-home.zsh" lucid
-  zinit light %HOME
+#
+# input
+#
+
+# Append `../` to your input for each `.` you type after an initial `..`
+#zstyle ':zim:input' double-dot-expand yes
+
+#
+# termtitle
+#
+
+# Set a custom terminal title format using prompt expansion escape sequences.
+# See http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Simple-Prompt-Escapes
+# If none is provided, the default '%n@%m: %~' is used.
+#zstyle ':zim:termtitle' format '%1~'
+
+#
+# zsh-autosuggestions
+#
+
+# Disable automatic widget re-binding on each precmd. This can be set when
+# zsh-users/zsh-autosuggestions is the last module in your ~/.zimrc.
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+
+# Customize the style that the suggestions are shown with.
+# See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
+
+#
+# zsh-syntax-highlighting
+#
+
+# Set what highlighters will be used.
+# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+# Customize the main highlighter styles.
+# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md#how-to-tweak-it
+#typeset -A ZSH_HIGHLIGHT_STYLES
+#ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
+
+# ------------------
+# Initialize modules
+# ------------------
+
+ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+# Download zimfw plugin manager if missing.
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  if (( ${+commands[curl]} )); then
+    curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  else
+    mkdir -p ${ZIM_HOME} && wget -nv -O ${ZIM_HOME}/zimfw.zsh \
+        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  fi
 fi
-zinit snippet OMZ::plugins/gradle/gradle.plugin.zsh
-
-# asdf
-zinit ice as"completion"
-zinit snippet https://github.com/asdf-vm/asdf/blob/master/completions/_asdf
-
-# Docker
-zinit snippet OMZ::plugins/docker-compose/docker-compose.plugin.zsh
-
-# functions
-if [ -f $HOME/.zfunctions/func_peco.zsh ]; then
-	. $HOME/.zfunctions/func_peco.zsh
+# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init -q
 fi
+# Initialize modules.
+source ${ZIM_HOME}/init.zsh
 
-autoload -Uz compinit
-compinit
-# Completion for kitty
-kitty + complete setup zsh | source /dev/stdin
-alias d="kitty +kitten diff"
+# ------------------------------
+# Post-init module configuration
+# ------------------------------
 
-# local zshrc - customise for home/work
-LOCAL_ZSHRC="$HOME/.zshrc.local"
-[ -s "$LOCAL_ZSHRC" ] && source "$LOCAL_ZSHRC"
+#
+# zsh-history-substring-search
+#
+
+zmodload -F zsh/terminfo +p:terminfo
+# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
+for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
+for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
+for key ('k') bindkey -M vicmd ${key} history-substring-search-up
+for key ('j') bindkey -M vicmd ${key} history-substring-search-down
+unset key
+# }}} End configuration added by Zim install
+
+eval "$(starship init zsh)"
+
+
+# pnpm
+export PNPM_HOME="/Users/bshi/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

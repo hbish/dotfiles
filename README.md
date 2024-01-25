@@ -44,3 +44,9 @@ chsh -s /usr/local/bin/zsh
 cd ~/.dotfiles
 stow <folder_name>
 ```
+
+5. Hammerspoon
+
+Set up the `~/.hammerspoon` directory (note, hammerspoon configs can not be a symlink).
+
+Enable `Privacy & Security > Accessibility` access for Hammerspoon
