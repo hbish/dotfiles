@@ -19,26 +19,29 @@ personal setups and other things
 0. Prereq
 - Homebrew
 
-```/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"```
-
-- Stow (required for symlinking dotfiles)
-
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
 
 1. Clone the repo
 
 ```
-https://github.com/hbish/dotfiles.git ~/.dotfiles
+git clone git@github.com:hbish/dotfiles.git ~/.dotfiles
 ```
 
-2. Make zsh as default shell
+2. Install Brewfile
+
+```
+brew bundle --file ~/.dotfiles/Brewfile
+```
+
+3. Make zsh as default shell (not required for Mac)
 
 ```
 chsh -s /usr/local/bin/zsh
 ```
 
-3. Install prezto
-
-4. Symlink
+4. Symlink manually (todo write script here)
 
 ```
 cd ~/.dotfiles
